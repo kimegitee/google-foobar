@@ -61,17 +61,18 @@ from functools import lru_cache
 from math import floor
 
 def answer(n):
+	# Step heights are unique and their sum cannot exceed n, from these we derive the maximum steps possible
 	upperbound = floor((2*n + 0.25)**0.5 - 0.5)
 	return sum(moarstairs(n, 1, k) for k in range(2, upperbound+1))
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=None) # Memoize or else it runs forever
 def moarstairs(n, lowerbound, k):
-	'''Number of combinations of n bricks into k columns satisfying the problem setting
+	'''Number of combinations of n bricks into k steps satisfying the problem setting
 	
 	Params:
 		n: number of bricks
 		lowerbound: minimum amount of bricks in a column
-		k: number of columns to divide n into
+		k: number of steps to divide n into
 	'''
 	if k == 1:
 		return 1
