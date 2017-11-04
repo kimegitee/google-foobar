@@ -71,7 +71,7 @@ def moarstairs(n, lowerbound, k):
 	
 	Params:
 		n: number of bricks
-		lowerbound: minimum amount of bricks in a column
+		lowerbound: minimum step height
 		k: number of steps to divide n into
 	'''
 	if k == 1:
