@@ -57,7 +57,6 @@ Output:
 Use verify [file] to test your solution and see how it does. When you are finished editing your code, use submit [file] to submit your answer. If your solution passes the test cases, it will be removed from your home folder.
 '''
 
-from functools import lru_cache
 from math import floor
 
 def answer(n):
@@ -65,7 +64,18 @@ def answer(n):
 	upperbound = floor((2*n + 0.25)**0.5 - 0.5)
 	return sum(moarstairs(n, 1, k) for k in range(2, upperbound+1))
 
-@lru_cache(maxsize=None) # Memoize or else it runs forever
+class memoize(dict):
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args):
+        return self[args]
+
+    def __missing__(self, key):
+        result = self[key] = self.func(*key)
+        return result
+        
+@memoize
 def moarstairs(n, lowerbound, k):
 	'''Number of combinations of n bricks into k steps satisfying the problem setting
 	
@@ -78,3 +88,4 @@ def moarstairs(n, lowerbound, k):
 		return 1
 	upperbound = floor(n/k - (k-1)/2)
 	return sum(moarstairs(n-x, x+1, k-1) for x in range(lowerbound, upperbound+1))
+
