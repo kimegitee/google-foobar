@@ -1,5 +1,5 @@
 import unittest
-import hey, staircase
+import hey, staircase, staircase2
 
 class HeyTest(unittest.TestCase):
 
@@ -21,3 +21,11 @@ class StairTest(unittest.TestCase):
 		self.assertEqual(staircase.answer(4), 1)
 		self.assertEqual(staircase.answer(5), 2)
 		self.assertEqual(staircase.answer(200), 487067745)
+
+class StairTest2(unittest.TestCase):
+	
+	def test_answer(self):
+		self.assertEqual(staircase2.answer(3), 1)
+		self.assertEqual(staircase2.answer(4), 1)
+		self.assertEqual(staircase2.answer(5), 2)
+		self.assertEqual(staircase2.answer(200), 487067745)
