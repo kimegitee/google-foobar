@@ -56,12 +56,11 @@ Output:
 
 Use verify [file] to test your solution and see how it does. When you are finished editing your code, use submit [file] to submit your answer. If your solution passes the test cases, it will be removed from your home folder.
 '''
-
-from math import floor
+from __future__ import division
 
 def answer(n):
 	# Step heights are unique and their sum cannot exceed n, from these we derive the maximum steps possible
-	upperbound = floor((2*n + 0.25)**0.5 - 0.5)
+	upperbound = int((2*n + 0.25)**0.5 - 0.5)
 	return sum(moarstairs(n, 1, k) for k in range(2, upperbound+1))
 
 class memoize(dict):
@@ -74,7 +73,7 @@ class memoize(dict):
     def __missing__(self, key):
         result = self[key] = self.func(*key)
         return result
-        
+
 @memoize
 def moarstairs(n, lowerbound, k):
 	'''Number of combinations of n bricks into k steps satisfying the problem setting
@@ -86,6 +85,6 @@ def moarstairs(n, lowerbound, k):
 	'''
 	if k == 1:
 		return 1
-	upperbound = floor(n/k - (k-1)/2)
+	upperbound = int(n/k - (k-1)/2)
 	return sum(moarstairs(n-x, x+1, k-1) for x in range(lowerbound, upperbound+1))
 
