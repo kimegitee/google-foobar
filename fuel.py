@@ -48,6 +48,7 @@ def answer(n: str) -> int:
 	while not goal_test(frontier):
 		node = frontier.pop(0)
 		for node in expand(node):
+			node = to_keep(frontier, node)
 			bisect.insort(frontier, node) # Maintain order in the queue
 	return frontier[0][2]
 
@@ -55,10 +56,17 @@ def answer(n: str) -> int:
 def expand(node: (float, int, int)) -> list:
 	_, v, g = node
 	g += 1
-	next_level = [(log(v+1, 2) + g, v+1, g), (log(v-1, 2) + g, v-1, g)]
 	if v % 2 == 0:
-		next_level.append((log(v/2, 2) + g, v/2, g))
-	return next_level
+		return [(log(v/2, 2) + g, v/2, g)]
+	else:
+		return [(log(v+1, 2) + g, v+1, g), (log(v-1, 2) + g, v-1, g)]
 
 def goal_test(frontier):
 	return frontier[0][1] == 1
+
+def to_keep(frontier, node):
+	for fnode in frontier:
+		if node[1] == fnode[1]:
+			node = node if node[2] < fnode[2] else fnode
+			frontier.remove(fnode)
+	return node
