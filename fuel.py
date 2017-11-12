@@ -41,14 +41,15 @@ Output:
 import bisect
 from math import log
 
-def answer(n):
+def answer(n: str) -> int:
+	'''Perform an A* search with heuristic value h(n) = log(n, base=2)'''
 	n = int(n)
 	frontier = [(log(n, 2), n, 0)]
 	while not goal_test(frontier):
 		node = frontier.pop(0)
 		for node in expand(node):
-			bisect.insort(frontier, node)
-	return frontier.pop(0)[2]
+			bisect.insort(frontier, node) # Maintain order in the queue
+	return frontier[0][2]
 
 
 def expand(node: (float, int, int)) -> list:
@@ -60,4 +61,4 @@ def expand(node: (float, int, int)) -> list:
 	return next_level
 
 def goal_test(frontier):
-	return 1 in [n for _, n, _ in frontier]
+	return frontier[0][1] == 1
