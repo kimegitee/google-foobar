@@ -1,5 +1,5 @@
 import unittest
-import hey, staircase, staircase2, fuel
+import hey, staircase, staircase2, fuel, find
 
 class HeyTest(unittest.TestCase):
 
@@ -37,3 +37,10 @@ class FuelTest(unittest.TestCase):
 		self.assertEqual(fuel.answer('4'), 2)
 		self.assertEqual(fuel.answer('15'), 5)
 		self.assertEqual(fuel.answer('50'), 7)
+
+class FindTest(unittest.TestCase):
+
+	def test_answer(self):
+		self.assertEqual(find.answer([1, 1, 1]), 1)
+		self.assertEqual(find.answer([1, 2, 3, 4, 5, 6]), 3)
+		self.assertEqual(find.answer([int(i) for i in '1'*1900]), 1141362300)
