@@ -1,4 +1,6 @@
 '''
+Level 3, Challenge 2
+
 Bomb, Baby!
 ===========
 
@@ -37,3 +39,14 @@ Inputs:
 Output:
     (string) "4"
 '''
+def replicate(bigger, smaller, count):
+    if smaller == 0:
+        return str(count-1) if bigger == 1 else 'impossible'
+    divisor, modulo = divmod(bigger, smaller)
+    return replicate(smaller, modulo, count+divisor)
+
+def answer(M, F):
+    m, f = int(M), int(F)
+    bigger = max(m, f)
+    smaller = min(m, f)
+    return replicate(bigger, smaller, 0)
