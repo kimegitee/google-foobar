@@ -47,3 +47,62 @@ Output:
 
 Use verify [file] to test your solution and see how it does. When you are finished editing your code, use submit [file] to submit your answer. If your solution passes the test cases, it will be removed from your home folder.
 '''
+def xor_range(start, end):
+    if start == end:
+        return start
+    seq_len = end - start + 1
+    s_binary = bin(start)[2:]
+    e_binary = bin(end)[2:]
+    max_len = max(len(s_binary), len(e_binary))
+    s_binary = s_binary.zfill(max_len)
+    e_binary = e_binary.zfill(max_len)
+    result = _xor_range(s_binary, e_binary, seq_len)
+    return int(result, 2)
+
+def _xor_range(a, b, seq_len):
+    assert len(a) == len(b)
+    if a == '0':
+        if seq_len // 2 % 2 == 0:
+            return '0'
+        else:
+            return '1'
+    if a == '1':
+        if (seq_len + 1) // 2 % 2 == 0:
+            return '0'
+        else:
+            return '1'
+    a_head = a[0]
+    b_head = b[0]
+    a_tail = a[-1]
+    b_tail = b[-1]
+    a_body = a[1:]
+    b_body = b[1:]
+    if a_head == '0':
+        if b_head == '0':
+            result = '0'
+        else:
+            if b_tail == '0':
+                result = '1'
+            else:
+                result = '0'
+    else:
+        if b_head == '0':
+            if a_tail == '0':
+                result = '0'
+            else:
+                result = '1'
+        else:
+            if a_tail == b_tail:
+                result = '1'
+            else:
+                result = '0'
+    return result + _xor_range(a_body, b_body, seq_len)
+
+def answer(start, length):
+    origin = start
+    result = 0
+    for i, offset in enumerate(range(length)):
+        start = origin + i*length
+        end = start + length - offset - 1
+        result = result ^ xor_range(start, end)
+    return result
